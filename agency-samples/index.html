@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Northlight Physio (fictional) - landing page build sample</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Build sample by Redraft Studio. Northlight Physio is a fictional clinic used to show a paid-ads landing page built as static HTML.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN TOKENS (map to theme colours / CSS variables in WP or Webflow) ===== */
+:root{
+  --ink:#10242b; --muted:#42555c; --bg:#ffffff; --tint:#eef6f5;
+  --brand:#0b5d66; --brand-dark:#073f46; --accent:#ffb84d; --line:#cfdcdc;
+  --radius:14px; --maxw:1080px;
+  --font-body:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --font-head:"Fraunces",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;font:17px/1.6 var(--font-body);color:var(--ink);background:var(--bg)}
+img,svg{max-width:100%}
+a{color:var(--brand)}
+:focus-visible{outline:3px solid #0a56c7;outline-offset:3px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--font-head);line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(32px,7vw,56px)}
+h2{font-size:clamp(26px,4.5vw,36px)}
+h3{font-size:21px}
+section{padding:56px 0}
+.skip{position:absolute;left:-999px;top:0;background:#fff;color:#000;padding:10px 14px;z-index:30}
+.skip:focus{left:8px;top:8px}
+
+/* ===== SAMPLE BANNER (remove when porting) ===== */
+.banner{background:#fff3cd;color:#3d2f00;border-bottom:2px solid #8a6200;padding:8px 16px;font-size:14px;line-height:1.4;text-align:center}
+.banner a{color:#3d2f00;font-weight:700}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:12px 26px;border-radius:999px;font:700 18px var(--font-body);text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn-primary{background:var(--accent);color:#2a1a00}
+.btn-primary:hover{background:#ffc874}
+.btn-dark{background:var(--brand);color:#fff}
+.btn-dark:hover{background:var(--brand-dark)}
+
+/* ===== HEADER / NAV ===== */
+.site-header{background:var(--brand-dark);color:#fff}
+.site-header .wrap{display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font:600 22px var(--font-head);color:#fff;text-decoration:none}
+.site-header .btn{min-height:44px;padding:8px 18px;font-size:16px}
+
+/* ===== HERO ===== */
+.hero{background:linear-gradient(160deg,var(--brand-dark),var(--brand));color:#fff;padding:48px 0 64px;position:relative;overflow:hidden}
+.hero .wrap{display:grid;gap:32px;position:relative}
+.eyebrow{display:inline-block;background:rgba(255,255,255,.14);padding:4px 14px;border-radius:999px;font-size:14px;font-weight:700;letter-spacing:.04em;margin:0 0 16px}
+.hero p.lead{font-size:20px;max-width:34em;color:#e6f2f2;margin:0 0 24px}
+.hero .note{font-size:15px;color:#d3e6e6;margin:14px 0 0}
+.hero-art{display:none}
+.rings{position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;border:60px solid rgba(255,184,77,.12)}
+@media (min-width:860px){
+  .hero .wrap{grid-template-columns:1.3fr .7fr;align-items:center}
+  .hero-art{display:block}
+}
+
+/* ===== BENEFITS ===== */
+.benefits{display:grid;gap:18px;grid-template-columns:1fr;list-style:none;padding:0;margin:0}
+.benefit{background:var(--tint);border-radius:var(--radius);padding:24px}
+.benefit svg{width:40px;height:40px;color:var(--brand);margin-bottom:8px}
+.benefit p{margin:0;color:var(--muted)}
+@media (min-width:760px){.benefits{grid-template-columns:repeat(3,1fr)}}
+
+/* ===== SOCIAL PROOF ===== */
+.proof{background:var(--tint)}
+.quotes{display:grid;gap:18px;grid-template-columns:1fr;margin:0;padding:0;list-style:none}
+.quote{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.quote .tag{display:inline-block;font-size:13px;font-weight:700;background:#fff3cd;color:#3d2f00;border:1px solid #8a6200;border-radius:6px;padding:2px 8px;margin-bottom:10px}
+.quote blockquote{margin:0 0 10px}
+.quote cite{font-style:normal;color:var(--muted);font-size:15px}
+@media (min-width:760px){.quotes{grid-template-columns:repeat(3,1fr)}}
+
+/* ===== OFFER / PRICING ===== */
+.offer-grid{display:grid;gap:20px;grid-template-columns:1fr}
+.plan{border:2px solid var(--line);border-radius:var(--radius);padding:26px;background:#fff}
+.plan.featured{border-color:var(--brand);box-shadow:0 8px 24px rgba(11,93,102,.15)}
+.price{font:600 40px var(--font-head);margin:6px 0}
+.price small{font:400 16px var(--font-body);color:var(--muted)}
+.plan ul{padding-left:20px;margin:12px 0 20px}
+.flag{display:inline-block;background:var(--brand);color:#fff;font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px}
+@media (min-width:760px){.offer-grid{grid-template-columns:1fr 1fr}}
+
+/* ===== FAQ ===== */
+.faq details{border-bottom:1px solid var(--line);padding:4px 0}
+.faq summary{cursor:pointer;font-weight:700;padding:14px 0;min-height:48px;list-style-position:inside}
+.faq details p{margin:0 0 16px;color:var(--muted)}
+
+/* ===== BOOKING FORM ===== */
+.book{background:var(--brand-dark);color:#fff}
+.book h2{color:#fff}
+.form{background:#fff;color:var(--ink);border-radius:var(--radius);padding:24px;display:grid;gap:16px;max-width:560px}
+.field label{display:block;font-weight:700;margin-bottom:4px}
+.field input,.field select{width:100%;min-height:48px;padding:10px 12px;font:inherit;border:2px solid #6b7f85;border-radius:10px;background:#fff;color:var(--ink)}
+.demo-note{font-size:14px;color:var(--muted);margin:0}
+.thanks{background:#e3f4e8;border:2px solid #1d6b3a;color:#0e3d20;padding:12px;border-radius:10px;font-weight:700}
+
+/* ===== FOOTER ===== */
+.site-footer{background:#0a1a1e;color:#cfe0e2;padding:32px 0;font-size:15px}
+.site-footer a{color:#fff}
+.site-footer p{margin:0 0 8px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+
+<!-- ===== SECTION: SAMPLE BANNER ===== -->
+<aside class="banner" aria-label="Sample notice">Sample build by <a href="https://harshit-aggarwal-07.github.io/redraft-previews/">Redraft Studio</a> &mdash; fictional business, for agency partners. Built in &lt; 48h as static HTML.</aside>
+
+<!-- ===== SECTION: HEADER ===== -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Northlight Physio, fictional clinic">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="#ffb84d"/><path d="M6 21c4-9 8-9 10-9s6 0 10 9" fill="none" stroke="#073f46" stroke-width="3" stroke-linecap="round"/></svg>
+      Northlight Physio
+    </a>
+    <a class="btn btn-primary" href="#book">Book now</a>
+  </div>
+</header>
+
+<main id="main">
+<!-- ===== SECTION: HERO (one offer, one CTA) ===== -->
+<section class="hero" id="top" aria-labelledby="hero-h">
+  <div class="rings" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">New-patient offer</p>
+      <h1 id="hero-h">Back pain holding you back? Get moving again.</h1>
+      <p class="lead">Your first assessment and treatment plan for a flat $49, with a physio who explains what is going on and what to do next.</p>
+      <a class="btn btn-primary" href="#book">Book my $49 assessment</a>
+      <p class="note">Fictional offer. Sample content only.</p>
+    </div>
+    <!-- Decorative art: inline SVG, no image files -->
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 240 240" width="100%" height="auto" role="presentation"><circle cx="120" cy="120" r="110" fill="rgba(255,255,255,.08)"/><circle cx="120" cy="120" r="72" fill="rgba(255,184,77,.9)"/><path d="M40 170c30-60 60-60 80-60s50 0 80 60" fill="none" stroke="#073f46" stroke-width="12" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION: BENEFITS ===== -->
+<section aria-labelledby="ben-h">
+  <div class="wrap">
+    <h2 id="ben-h">Why people choose Northlight</h2>
+    <ul class="benefits">
+      <li class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <h3>Seen within 48 hours</h3><p>Most new patients get an appointment within two working days.</p>
+      </li>
+      <li class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>
+        <h3>A clear plan, not guesswork</h3><p>You leave with a written plan: what to do, how often, and what to expect.</p>
+      </li>
+      <li class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>
+        <h3>One physio, start to finish</h3><p>The same person looks after you at every visit.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== SECTION: SOCIAL PROOF (placeholders only) ===== -->
+<section class="proof" aria-labelledby="proof-h">
+  <div class="wrap">
+    <h2 id="proof-h">What patients say</h2>
+    <ul class="quotes">
+      <li class="quote"><span class="tag">Placeholder testimonial</span>
+        <blockquote><p>&ldquo;Short quote about getting an appointment quickly goes here.&rdquo;</p></blockquote><cite>Client name, suburb</cite></li>
+      <li class="quote"><span class="tag">Placeholder testimonial</span>
+        <blockquote><p>&ldquo;Short quote about the clear treatment plan goes here.&rdquo;</p></blockquote><cite>Client name, suburb</cite></li>
+      <li class="quote"><span class="tag">Placeholder testimonial</span>
+        <blockquote><p>&ldquo;Short quote about being back to normal activity goes here.&rdquo;</p></blockquote><cite>Client name, suburb</cite></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== SECTION: OFFER / PRICING ===== -->
+<section aria-labelledby="offer-h">
+  <div class="wrap">
+    <h2 id="offer-h">Simple, upfront pricing</h2>
+    <div class="offer-grid">
+      <div class="plan featured">
+        <span class="flag">New patients</span>
+        <h3>First assessment</h3>
+        <p class="price">$49 <small>one-off</small></p>
+        <ul><li>45-minute one-on-one assessment</li><li>Written treatment plan</li><li>First treatment included</li></ul>
+        <a class="btn btn-dark" href="#book">Book this offer</a>
+      </div>
+      <div class="plan">
+        <h3>Follow-up session</h3>
+        <p class="price">$85 <small>per 30 minutes</small></p>
+        <ul><li>Hands-on treatment</li><li>Exercise progression</li><li>Progress check against your plan</li></ul>
+        <a class="btn btn-dark" href="#book">Book a follow-up</a>
+      </div>
+    </div>
+    <p class="demo-note">Prices are fictional placeholders.</p>
+  </div>
+</section>
+
+<!-- ===== SECTION: FAQ ===== -->
+<section class="faq" aria-labelledby="faq-h" style="background:var(--tint)">
+  <div class="wrap">
+    <h2 id="faq-h">Questions, answered</h2>
+    <details><summary>Do I need a referral?</summary><p>No. You can book directly. (Sample answer.)</p></details>
+    <details><summary>Can I claim on private health cover?</summary><p>Many funds cover physio. Bring your card and we will help you check. (Sample answer.)</p></details>
+    <details><summary>What should I wear?</summary><p>Comfortable clothes you can move in.</p></details>
+    <details><summary>What if I need to reschedule?</summary><p>Let us know 24 hours ahead and there is no fee. (Sample policy.)</p></details>
+  </div>
+</section>
+
+<!-- ===== SECTION: BOOKING FORM (demo, no backend) ===== -->
+<section class="book" id="book" aria-labelledby="book-h">
+  <div class="wrap">
+    <h2 id="book-h">Book your $49 assessment</h2>
+    <form class="form" action="#" method="post" id="demo-form">
+      <div class="field"><label for="name">Full name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="phone">Mobile number</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div>
+      <div class="field"><label for="area">Where does it hurt?</label>
+        <select id="area" name="area"><option>Lower back</option><option>Neck and shoulders</option><option>Knee</option><option>Other</option></select></div>
+      <button class="btn btn-dark" type="submit">Request my booking</button>
+      <p class="demo-note">Demo form &mdash; doesn't send. No data is collected.</p>
+      <p class="thanks" id="thanks" role="status" hidden>Demo only: nothing was sent.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ===== SECTION: FOOTER ===== -->
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>Northlight Physio</strong> is a fictional clinic used as a build sample by Redraft Studio. It does not exist.</p>
+    <p>Fictional address and phone intentionally omitted. Privacy and terms links would go here.</p>
+    <p>Want this kind of build for your clients? <a href="https://harshit-aggarwal-07.github.io/redraft-previews/">See Redraft Studio</a>.</p>
+  </div>
+</footer>
+
+<script>
+/* Demo form: show a note instead of submitting */
+document.getElementById('demo-form').addEventListener('submit',function(e){
+  e.preventDefault();
+  document.getElementById('thanks').hidden=false;
+});
+</script>
+</body>
+</html>
